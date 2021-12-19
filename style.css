@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #464660;
+}
+
+.calculator-container {
+    outline: 2px solid #000;
+    display: grid;
+    border-radius: 5px;
+    justify-items: center;
+    
+}
+
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+    "display display display display"
+    "seven eight nine add"
+    "four five six subtract"
+    "one two three multiply"
+    "zero clear equal divide";
+    height: 600px;
+    width: 400px; 
+    /* gap: 10px; */
+    padding: 20px;
+    background-color: #368c86;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 0px inset, rgba(0, 0, 0, 0.2) 0px -3px 0px inset, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; 
+}
+
+
+
+.display-container {
+  grid-area: display;
+  border: 2px solid #000;
+  height: 95%;
+  background-color: rgba(110, 173, 245, 0.37);
+}
+.display-area {
+  font-size: 40px;
+  padding: 10px;
+}
+
+button {
+  font-size: 1.6em;
+  align-self: stretch;
+  outline: 1px solid #000;
+  background-color: #DDDDDD;
+  border: none;
+}
+
+button:active {
+  background-color: rgba(110, 173, 245, 0.37);
+}
+
+button:hover {
+  opacity: .8;
+}
+
+.operator {
+  background-color: #A2CDCD;
+}
+
+#clear {
+  background-color: #F55C47;
+  border: none;
+}
+
+
+#seven {
+    grid-area: seven;
+  }
+  
+  #eight {
+    grid-area: eight;
+  }
+  
+  #nine {
+    grid-area: nine;
+  }
+  
+  #add {
+    grid-area: add;
+  }
+  
+  #four {
+    grid-area: four;
+  }
+  
+  #five {
+    grid-area: five;
+  }
+  
+  #six {
+    grid-area: six;
+  }
+  
+  #subtract {
+    grid-area: subtract;
+  }
+  
+  #one {
+    grid-area: one;
+  }
+  
+  #two {
+    grid-area: two;
+  }
+  
+  #three {
+    grid-area: three;
+  }
+  
+  #multiply {
+    grid-area: multiply;
+  }
+  
+  #zero {
+    grid-area: zero;
+  }
+  
+  #clear {
+    grid-area: clear;
+  }
+  
+  #equal {
+    grid-area: equal;
+  }
+  
+  #divide {
+    grid-area: divide;
+  }

@@ -1,12 +1,13 @@
-const displayArea = document.getElementById('display-container');
+const displayArea = document.getElementById('display-area');
 const numberBtn = document.querySelectorAll('.numbers');
 const equalBtn = document.getElementById('equal');
 const operatorBtn = document.querySelectorAll('.operator');
 const clearBtn = document.getElementById('clear');
-let displayValue = 0;
-let firstNumber = "";
-let secondNumber = "";
-let operator = "";
+let firstNumber = null;
+let secondNumber = null;
+let currentOperator = null;
+let result = null;
+let toBeCleaned = false;
 
 function add(a, b) {
   return a + b;
@@ -24,103 +25,99 @@ function divide(a, b) {
   return a / b;
 }
 
+function operate(a, b, operator) {
+  switch(operator) {
+    case "add":
+      return add(a, b);
+      break;
+    case "subtract":
+      return subtract(a, b);
+      break;
+    case "multiply":
+      return multiply(a, b);
+      break;
+    case "divide":
+      return divide(a, b);
+      break;
+  }
+}
 
-numberBtn.forEach(number => {
-  number.addEventListener("click", e => {
-      if (operator === "") { // Read first number if no operator set yet
-          firstNumber += e.target.innerText;
-          console.log(firstNumber)
-      } else { // Read second number
-          secondNumber += e.target.innerText;
-          console.log(secondNumber)
-      }
-  });
-});
+function displayValue(value) {
+  displayArea.textContent = displayArea.textContent + value;
+}
 
-operatorBtn.forEach(op => {
-  op.addEventListener("click", e => {
-    if (e.target.innerText !== "=") { // If the operator is not equals
-      operator = e.target.innerText;
+function getDisplayValue() {
+  return displayArea.textContent;
+}
 
-      console.log(firstNumber); // Print the first number
-      console.log(operator); // Print the operator
-
-  } else { // If equals button clicked
-      console.log(secondNum); // Print 2nd number
-
-      switch(operator) {
-        case "add":
-          return add(a, b);
-          break;
-        case "subtract":
-          return subtract(a, b);
-          break;
-        case "multiply":
-          return multiply(a, b);
-          break;
-        case "divide":
-          return divide(a, b);
-          break;
-      }
+function setOperator(operator) {
+  if (currentOperator == null) {
+    currentOperator = operator;
+  } else if (firstNumber && secondNumber) {
+    result = operate(Number(firstNumber), Number(secondNumber), currentOperator);
+    clearDisplay();
+    displayValue(result);
+    firstNumber = result;
+    secondNumber = null;
+    currentOperator = operator
     }
-  });
+  }
+
+  function setOperand(value) {
+    if (firstNumber == null) {
+      firstNumber = value;
+    } else {
+      secondNumber = value;
+    }
+  }
+
+  function clearDisplay() {
+    displayArea.textContent = "";
+  }
+
+function generateResult() {
+  if (firstNumber && currentOperator && !toBeCleaned && !secondNumber) {
+    setOperand(getDisplayValue());
+    return operate(Number(firstNumber), Number(secondNumber), currentOperator);
+  } else {
+    return false;
+  }
+}
+
+operatorBtn.forEach((operator) => {
+  operator.addEventListener("click", (e) => {
+    setOperand(getDisplayValue());
+    setOperator(e.target.id);
+    toBeCleaned = true;
+});
 });
 
 
+numberBtn.forEach((numberButton) => {
+  numberButton.addEventListener("click", e => {
+    if (toBeCleaned) {
+      clearDisplay();
+    }
+    displayValue(e.target.textContent);
+    toBeCleaned = false;
+});
+});
 
 
 
 clearBtn.addEventListener('click', () => {
-  
+  firstNumber = null;
+  secondNumber = null;
+  currentOperator = null;
+  clearDisplay();
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function operate(a, b, operator) {
-  // switch(operator) {
-  //   case "add":
-  //     return add(a, b);
-  //     break;
-  //   case "subtract":
-  //     return subtract(a, b);
-  //     break;
-  //   case "multiply":
-  //     return multiply(a, b);
-  //     break;
-  //   case "divide":
-  //     return divide(a, b);
-  //     break;
-  // }
-// }
-
-
-// numberBtn.forEach(button => {
-//   button.addEventListener('click', () => {
-//     if (condition) {
-      
-//     }
-//      let firstNumber = button.value;
-//      displayArea.innerText = firstNumber;
-//   });
-// });
+equalBtn.addEventListener('click', () => {
+  result = generateResult();
+  clearDisplay();
+  if (result) {
+    displayValue(result);
+  }
+});
 
