@@ -62,7 +62,7 @@ operatorBtn.forEach(op => {
           return divide(a, b);
           break;
       }
-  }
+    }
   });
 });
 
